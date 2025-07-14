@@ -172,8 +172,7 @@ def main():
     print("\n" + "="*40)
     print("ROCK PAPER SCISSORS ULTIMATE".center(40))
     print("="*40)
-    print("Welcome to the ultimate Rock Paper Scissors experience!")
-    print("Now with stats tracking, game history, and adaptive AI!")
+    print("Welcome to the Rock Paper Scissors experience!")
     print("="*40 + "\n")
     
     game = RockPaperScissors()
