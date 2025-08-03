@@ -1,0 +1,164 @@
+#:import Window kivy.core.window.Window
+#:import dp kivy.metrics.dp
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import ImageButton mobile-stone-paper-scissors.ImageButton
+
+ScreenManager:
+    transition: FadeTransition()
+    HomeScreen:
+    GameScreen:
+    HistoryScreen:
+    LeaderboardScreen:
+
+<HomeScreen>:
+    name: "home"
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(20)
+        canvas.before:
+            Color:
+                rgba: .1, .1, .1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "Rock Paper Scissors"
+            font_size: Window.width / 15
+            color: 1, 1, 1, 1
+        Button:
+            text: "Start Game"
+            font_size: Window.width / 25
+            size_hint_y: None
+            height: dp(60)
+            on_press: root.manager.current = "game"
+        Button:
+            text: "Quit"
+            font_size: Window.width / 25
+            size_hint_y: None
+            height: dp(60)
+            on_press: app.stop()
+
+<GameScreen>:
+    name: "game"
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(20)
+        canvas.before:
+            Color:
+                rgba: 0.05, 0.05, 0.05, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: stats_label
+            text: ""
+            font_size: Window.width / 30
+            color: 1, 1, 1, 1
+        GridLayout:
+            cols: 3
+            spacing: dp(15)
+            size_hint_y: None
+            height: dp(180)
+
+            ImageButton:
+                source: "assets/rock.png"
+                on_release: root.play('R')
+
+            ImageButton:
+                source: "assets/paper.png"
+                on_release: root.play('P')
+
+            ImageButton:
+                source: "assets/scissors.png"
+                on_release: root.play('S')
+
+        Label:
+            text: root.result_text
+            font_size: Window.width / 30
+            color: 1, 1, 1, 1
+            size_hint_y: None
+            height: dp(120)
+            canvas.before:
+                Color:
+                    rgba: root.result_bg_color
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20,]
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+            Button:
+                text: "History"
+                on_press: root.manager.current = "history"
+            Button:
+                text: "Leaderboard"
+                on_press: root.manager.current = "leaderboard"
+            Button:
+                text: "Reset"
+                on_press: root.reset_game()
+        Button:
+            text: "Back to Home"
+            size_hint_y: None
+            height: dp(50)
+            on_press: root.manager.current = "home"
+
+<HistoryScreen>:
+    name: "history"
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(20)
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "Last 10 Matches"
+            font_size: Window.width / 20
+            color: 1, 1, 1, 1
+        ScrollView:
+            Label:
+                id: history_text
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                font_size: Window.width / 35
+                color: 1, 1, 1, 1
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height: dp(50)
+            on_press: root.manager.current = "game"
+
+<LeaderboardScreen>:
+    name: "leaderboard"
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(20)
+        spacing: dp(20)
+        canvas.before:
+            Color:
+                rgba: 0.1, 0.1, 0.1, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: "Leaderboard"
+            font_size: Window.width / 20
+            color: 1, 1, 1, 1
+        Label:
+            id: leaderboard_label
+            text: ""
+            font_size: Window.width / 35
+            color: 1, 1, 1, 1
+        Button:
+            text: "Back"
+            size_hint_y: None
+            height: dp(50)
+            on_press: root.manager.current = "game"
